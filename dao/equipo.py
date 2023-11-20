@@ -1,4 +1,4 @@
-rom db.connection import with_connection
+from db.connection import with_connection
 
 class EquipoDAO():
     def data(self,

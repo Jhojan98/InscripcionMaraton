@@ -1,3 +1,5 @@
+from db.connection import with_connection
+
 class IntegranteDAO():
     def data(self,
             equipo,
