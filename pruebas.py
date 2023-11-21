@@ -3,9 +3,11 @@ from dao.equipo import EquipoDAO
 from dao.integrante import IntegranteDAO
 from dao.maraton import MaratonDAO
 
+
 # Crear algunos usuarios de ejemplo
 usuario1 = UsuarioDAO()
 usuario1.data(1, "Juan", "juan@gmail.com", "1234", "normal")
+
 usuario2 = UsuarioDAO()
 usuario2.data(2, "Ana", "ana@gmail.com", "5678", "lider")
 usuario3 = UsuarioDAO()

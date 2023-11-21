@@ -1,11 +1,11 @@
 from connection import with_connection
 
 @with_connection
-def create_table_usuarios(*args,**kwargs):
+def create_table_usuario(*args,**kwargs):
     conn = kwargs.pop('connection')
     cursor = conn.cursor()
     query  = f'''
-    CREATE TABLE IF NOT EXISTS usuarios (
+    CREATE TABLE IF NOT EXISTS usuario (
         id INTEGER PRIMARY KEY,
         nombre TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
@@ -18,11 +18,11 @@ def create_table_usuarios(*args,**kwargs):
     return result
 
 @with_connection
-def create_table_equipos(*args,**kwargs):
+def create_table_equipo(*args,**kwargs):
     conn = kwargs.pop('connection')
     cursor = conn.cursor()
     query  = f'''
-    CREATE TABLE IF NOT EXISTS equipos (
+    CREATE TABLE IF NOT EXISTS equipo (
         id INTEGER PRIMARY KEY,
         nombre TEXT UNIQUE NOT NULL,
         lider INTEGER NOT NULL,
@@ -37,11 +37,11 @@ def create_table_equipos(*args,**kwargs):
     return result
 
 @with_connection
-def create_table_integrantes(*args,**kwargs):
+def create_table_integrante(*args,**kwargs):
     conn = kwargs.pop('connection')
     cursor = conn.cursor()
     query  = f'''
-    CREATE TABLE IF NOT EXISTS integrantes (
+    CREATE TABLE IF NOT EXISTS integrante (
         equipo INTEGER NOT NULL,
         usuario INTEGER NOT NULL,
         PRIMARY KEY (equipo, usuario),
@@ -54,11 +54,11 @@ def create_table_integrantes(*args,**kwargs):
     return result
 
 @with_connection
-def create_table_maratones(*args,**kwargs):
+def create_table_maraton(*args,**kwargs):
     conn = kwargs.pop('connection')
     cursor = conn.cursor()
     query  = f'''
-    CREATE TABLE IF NOT EXISTS maratones (
+    CREATE TABLE IF NOT EXISTS maraton (
         id INTEGER PRIMARY KEY,
         nombre TEXT UNIQUE NOT NULL,
         fecha DATE NOT NULL,
@@ -74,7 +74,7 @@ def create_table_maratones(*args,**kwargs):
 
 
 if __name__ == "__main__":
-    create_table_usuarios()
-    create_table_equipos()
-    create_table_integrantes()
-    create_table_maratones()
+    create_table_usuario()
+    create_table_equipo()
+    create_table_integrante()
+    create_table_maraton()
