@@ -1,11 +1,13 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
+from main import db
 
-base_dir = os.path.abspath(os.path.dirname(__file__))
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'gestion.db')
-db = SQLAlchemy(app)
+
+#base_dir = os.path.abspath(os.path.dirname(__file__))
+#app = Flask(__name__)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'gestion.db')
+#db = SQLAlchemy(app)
 
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,6 +16,15 @@ class Usuario(db.Model):
     contraseña = db.Column(db.String(64), nullable=False)
     tipo = db.Column(db.String(16), nullable=False, default="normal")
     equipos = db.relationship("Equipo", secondary="integrante", back_populates="usuarios")
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "email": self.email,
+            "contraseña": self.contraseña,
+            "tipo": self.tipo,
+            "equipos": [equipo.to_dict() for equipo in self.equipos]
+        }
 
 class Equipo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
