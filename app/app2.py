@@ -1,22 +1,26 @@
 from flask import Flask
 import os
 from flask_restful import Api
-from api_usuarios.api import UsuarioResource,Hello,UsuarioIdResource # Importar el módulo api_usuarios
+from api_usuarios.api import UsuarioResource,Hello,UsuarioIdResource
+from api_equipos.api import EquipoResource,EquipoIdResource
+from api_maraton.api import MaratonResource,MaratonIdResource
 from main import app,db
+from api_usuarios.cliente import UsuariosClient
 
-"""
-# Crear la aplicación de Flask
-base_dir = os.path.abspath(os.path.dirname(__file__))
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(base_dir, 'gestion.db')
-# Crear la instancia de Api
-
-"""
 api = Api(app)
 # Añadir el recurso UsuarioResource al objeto api
 api.add_resource(UsuarioResource, "/usuarios")
 api.add_resource(UsuarioIdResource, "/usuarios", "/usuarios/<int:id>")
 api.add_resource(Hello, "/hello")
+api.add_resource(EquipoResource, "/equipos")
+api.add_resource(EquipoIdResource, "/equipos","/equipos/<int:id>")
+api.add_resource(MaratonResource, "/maratones")
+api.add_resource(MaratonIdResource, "/maratones","/maratones/<int:id>")
+"""
+user = clientUS.get_user_by_id(4) # Llamar al método get_user_by_id con el id 1
+    print(user) # Imprimir el resultado
+"""
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
