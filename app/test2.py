@@ -42,7 +42,7 @@ def login():
             password = request.form['password']
             print(f"Usuario: {usuario}, Password: {password}")
             
-            success_message = 'Bienvenido {}'.format(usuario)
+            
             
             return render_template('auth/home.html')
 
