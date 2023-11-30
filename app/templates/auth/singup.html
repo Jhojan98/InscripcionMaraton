@@ -1,0 +1,63 @@
+    {%  extends './base.html' %}
+
+    {% block title %}Registro Maratón{% endblock %}
+
+    {% block customCSS %}
+        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> 
+        <link rel="stylesheet" href="/static/index.css">
+        <link rel="stylesheet" href="/static/singup.css">
+    {% endblock %}
+
+    {% block body %}
+        <img src="https://cdnb.artstation.com/p/assets/images/images/024/538/827/original/pixel-jeff-clipa-s.gif?1582740711" alt="" class="img">
+
+        <form action="{{ url_for('singup') }}" method="POST" class="form-box animate__animated animate__slideInUp">
+        <h2 class="form-tittle">Registrarse</h2>
+
+        <div class="Participante1">
+            <input type="text" name="participante1" placeholder="Nombre participante 1">
+            <input type="number" name="codigo1" placeholder="Código">            
+            <select name="materia1" id="materia1">
+                <option value="" disabled selected>Materia cursando</option>
+                <option value="basico" >Básico</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avanzado">Avanzado</option>
+                <option value="profesional">Profesional</option>
+            </select>
+        </div>
+
+        <div class="Participante2">
+            <input type="text" name="participante2" placeholder="Nombre participante 2">   
+            <input type="number" name="codigo2" placeholder="Código">      
+            <select name="materia2" id="materia2">
+                <option value="" disabled selected>Materia cursando</option>
+                <option value="basico">Básico</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avanzado">Avanzado</option>
+                <option value="profesional">Profesional</option>
+            </select>
+        </div>
+
+        <div class="Participante3">
+            <input type="text" name="participante3" placeholder="Nombre participante 3">     
+            <input type="number"  name="codigo3" placeholder="Código">       
+            <select name="materia3" id="materia3">
+                <option value="" disabled selected>Materia cursando</option>
+                <option value="basico">Básico</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avanzado">Avanzado</option>
+                <option value="profesional">Profesional</option>
+            </select>
+        </div>
+
+        <div class="Usuario">
+            <input type="text" placeholder="Nombre equipo">
+            <input type="password" placeholder="Contraseña">
+        </div>
+        
+        <div class="Botones">
+            <button type="button" class="Volver" onclick="window.location.href='{{ url_for('login') }}'">Volver</button>
+            <button type="submit" class="Registrar">Registrar</button>
+        </div>
+
+    {% endblock %}

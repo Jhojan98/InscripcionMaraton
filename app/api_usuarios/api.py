@@ -12,6 +12,11 @@ class Hello(Resource):
         return {"message": "Hello, world!"}
     
 class UsuarioResource(Resource):
+    def get(self):
+        usuarios = Usuario.query.all()
+        result = usuarios_schema.dump(usuarios)
+        return jsonify(result)
+    
     def post(self):
         try:
             data = request.get_json()
@@ -37,9 +42,9 @@ class UsuarioResource(Resource):
             return e.messages, 400
 
 class UsuarioIdResource(Resource):
-    def get(self, id):
+    def get(self, name):
         try:
-            usuario = Usuario.query.filter_by(id=id).one()
+            usuario = Usuario.query.filter_by(name=name).one()
             result = usuario_schema.dump(usuario)
             return jsonify(result)
         except NoResultFound:

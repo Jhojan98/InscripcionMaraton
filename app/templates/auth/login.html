@@ -1,0 +1,22 @@
+{%  extends './base.html' %}
+
+{% block title %}Login Maratón{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> 
+    <link rel="stylesheet" href="/static/index.css">
+{% endblock %}
+
+{% block body %}
+    <img src="https://cdnb.artstation.com/p/assets/images/images/024/538/827/original/pixel-jeff-clipa-s.gif?1582740711" alt="" class="img">
+    <form  method="POST" class="form-box animate__animated animate__slideInUp">
+        <h1 class="form-tittle">Maratón de programación</h1>
+        <h4 class="form-tittle">Iniciar Sesión</h4>
+        <input type="text" name="usuario" placeholder="Nombre equipo">
+        <input type="password" name="password" placeholder="Contraseña">
+            <button type="submit">Ingresar</button>
+            <a href="/singup">Registrarse</a>
+        
+    </form>
+    
+{% endblock %}
