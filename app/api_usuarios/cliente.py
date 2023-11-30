@@ -46,3 +46,21 @@ class UsuariosClient:
         endpoint = self.base_url + f"/api/v1/usuarios/{id}"
         response = self.session.delete(endpoint) # Usar la sesión para enviar la petición DELETE
         return response.json()
+
+    def login_user(self, nombre_o_email, contraseña):
+        # Iniciar sesión con el nombre o el email y la contraseña dados
+        endpoint = self.base_url + "/api/v1/login"
+        data = {
+            "nombre": nombre_o_email,
+            "email": nombre_o_email,
+            "contraseña": contraseña
+        }
+        response = self.session.post(endpoint, json=data) # Usar la sesión para enviar la petición POST
+        result = response.json()
+        if response.status_code == 200:
+            # Si la respuesta es exitosa, guardar el token y devolver el mensaje de éxito
+            self.token = result["token"]
+            return result["message"]
+        else:
+            # Si la respuesta es errónea, devolver el mensaje de error y el código de estado
+            return result["error"], response.status_code

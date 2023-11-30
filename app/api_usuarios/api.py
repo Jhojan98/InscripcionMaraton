@@ -6,8 +6,27 @@ from main import db,app
 from models import  Usuario,usuarios_schema,usuario_schema
 from sqlalchemy.orm.exc import NoResultFound # Importar la excepción NoResultFound
 from marshmallow.exceptions import ValidationError
+from sqlalchemy.orm.exc import NoResultFound # Importar la excepción NoResultFound
 
 
+class LoginResource(Resource):
+    def post(self):
+        try:
+            data = request.get_json()
+            existing_user = Usuario.query.filter((Usuario.nombre == data.get("nombre",None)) | (Usuario.email == data.get("email",None))).first()
+            if existing_user and existing_user.contraseña == data.get("contraseña",None):
+                return {"message": "El usuario y la contraseña son válidos"}, 200
+            else:
+                return {"error": "El usuario o la contraseña son inválidos"}, 401
+
+        except ValidationError as e:
+            return e.messages, 400
+        except NoResultFound:
+            return {"error": "No se encontró el usuario con el nombre o el email proporcionados"}, 404
+        except Exception as e:
+            return {"error": "Se produjo un error al procesar la solicitud"}, 500
+
+        
 class UsuarioResource(Resource):
     def get(self):
         usuarios = Usuario.query.all()
