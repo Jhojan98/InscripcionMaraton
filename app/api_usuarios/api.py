@@ -7,10 +7,7 @@ from models import  Usuario,usuarios_schema,usuario_schema
 from sqlalchemy.orm.exc import NoResultFound # Importar la excepción NoResultFound
 from marshmallow.exceptions import ValidationError
 
-class Hello(Resource):
-    def get(self):
-        return {"message": "Hello, world!"}
-    
+
 class UsuarioResource(Resource):
     def get(self):
         usuarios = Usuario.query.all()
@@ -42,17 +39,17 @@ class UsuarioResource(Resource):
             return e.messages, 400
 
 class UsuarioIdResource(Resource):
-    def get(self, name):
+    def get(self, nombre):
         try:
-            usuario = Usuario.query.filter_by(name=name).one()
+            usuario = Usuario.query.filter_by(nombre=nombre).one()
             result = usuario_schema.dump(usuario)
             return jsonify(result)
         except NoResultFound:
-            abort(404, message="No se encontró el usuario con el id {}".format(id))
+            abort(404, message="No se encontró el usuario con el nombre {}".format(nombre))
         except Exception as e:
             abort(500, message="Se produjo un error al procesar la solicitud")
 
-    def put(self, id):
+    def put(self, nombre):
         data = request.get_json()
         nombre = data.get("nombre",None)
         email = data.get("email",None)
@@ -60,7 +57,7 @@ class UsuarioIdResource(Resource):
         tipo = data.get("tipo",None)
         #if nombre and email and contraseña and tipo:
         try:
-            usuario = Usuario.query.filter_by(id=id).one()
+            usuario = Usuario.query.filter_by(nombre=nombre).one()
             if nombre:
                 usuario.nombre = nombre
             if email:
@@ -72,7 +69,7 @@ class UsuarioIdResource(Resource):
             db.session.commit()
             return jsonify({"mensaje": "El usuario {} fue actualizado con éxito".format(nombre)})
         except NoResultFound:
-            abort(404, message="No se encontró el usuario con el id {}".format(id))
+            abort(404, message="No se encontró el usuario con el nombre {}".format(nombre))
         except Exception as e:
             abort(500, message="Se produjo un error al procesar la solicitud")
         #else:

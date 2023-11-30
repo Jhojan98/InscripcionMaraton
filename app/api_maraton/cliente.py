@@ -1,7 +1,7 @@
 import requests
 
 class MaratonesClient: 
-    def init(self, base_url):
+    def __init__(self, base_url):
         self.base_url = base_url 
         self.session = requests.Session() # Crear una sesión de requests para reutilizar la conexión
 
