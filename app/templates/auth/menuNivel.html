@@ -1,0 +1,108 @@
+{% extends './base.html' %}
+
+{% block title %}Nivel maratón{% endblock %}
+
+{% block customCSS %}
+	<link href="static/bootstrap.min.css" rel="stylesheet">
+	<link href="static/style.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<a name="btnSalir" href="#" class="btn btn-secondary" type="button">Salir</a>
+			<h1 class="text-center">Maratón de programación</h1> 
+			<button name="btnAdmin"type="button" class="btn btn-link">
+				Administrador
+			</button>
+		</div>
+		<h4>Selecciona el nivel en que deseas participar:</h4> 
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div name="Basica"class="jumbotron">
+				<h2>Básica</h2>
+				<p>Los participantes se sumergirán en los fundamentos de la programación. Se utilizarán lenguajes como Python o 
+					pseudocodigo para aplicar sobre variables, operadores, estructuras de control y funciones. La atención se centrará en 
+					construir una base sólida para la programación y resolver problemas con poca.</p>
+				<p>
+					<a class="btn btn-primary btn-large" name="btnBasica" onclick="seleccionarNivel('Basica')" href="#">Learn more</a>
+				</p>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div name="Intermedia"class="jumbotron">
+				<h2>Intermedia</h2>
+				<p>
+					Este nivel se centrará en la programación orientada a objetos, algoritmos más avanzados, y estructuras de datos más complejas. Los participantes adquirirán habilidades más avanzadas y aprenderán a resolver problemas de manera más eficiente. Utilizando mayor variedad de lenguajes.
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" name="btnIntermedia" onclick="seleccionarNivel('Intermedia')" href="#">Learn more</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div name="Avanzada"class="jumbotron">
+				<h2>
+					Avanzada
+				</h2>
+				<p>
+					En este nivel, se profundizará en conceptos más avanzados como la optimización, complejidad algorítmica, desarrollo de software escalable y desafíos del mundo real. Los participantes estarán preparados para enfrentar problemas de la vida real y diseñar soluciones eficientes.
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" name="btnAvanzada" onclick="seleccionarNivel('Avanzada')" href="#">Learn more</a>
+				</p>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div name="Profesional"class="jumbotron">
+				<h2>
+					Profecional
+				</h2>
+				<p>
+					Los participantes profundizarán en áreas específicas, como desarrollo web avanzado, inteligencia artificial, seguridad informática, o ciencia de datos. Se espera que adquieran conocimientos especializados y dominen herramientas avanzadas dando soluciones a problemas de alta complejodad eficientemente .
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" name="btnProfesional"  onclick="seleccionarNivel('Profesional')"href="#">Learn more</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+
+	<script>
+		function seleccionarNivel(nivel) {
+			// Desactivar todos los botones
+			var botones = document.querySelectorAll('.btn-nivel');
+			botones.forEach(function (boton) {
+				boton.disabled = true;
+			});
+	
+			// Activar solo el botón del nivel seleccionado
+			var botonSeleccionado = document.querySelector('[name="btn' + nivel + '"]');
+			botonSeleccionado.disabled = false;
+	
+			// Enviar el nivel seleccionado al servidor
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "/menuNivel", true);
+			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+					console.log("Nivel enviado exitosamente al servidor");
+				}
+			};
+			xhr.send(JSON.stringify({ nivel: nivel }));
+	
+			// Puedes quitar el alert o modificarlo según tus necesidades.
+			alert("Te has inscrito en el nivel: " + nivel);
+		}
+	</script>
+	
+{% endblock %}
