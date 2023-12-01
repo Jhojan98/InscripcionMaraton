@@ -1,0 +1,33 @@
+{%  extends './base.html' %}
+
+{% block title %}Inscribir Equipo Maratón{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> 
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/registroEquipo.css">
+{% endblock %}
+
+{% block body %}
+    <img src="https://cdnb.artstation.com/p/assets/images/images/024/538/827/original/pixel-jeff-clipa-s.gif?1582740711" alt="" class="img">
+    <form action="{{ url_for('registroEquipo') }}" method="POST" class="form-box animate__animated animate__slideInUp">
+        <h3 class="form-tittle">Registrar equipo</h3>
+        
+        <input type="text" name="participante1" placeholder="Participante 1">
+        <input type="text" name="participante2" placeholder="Participante 2">
+        <input type="text" name="participante3" placeholder="Participante 3">
+        <input type="text" name="Lider" placeholder="Lider Equipo">
+        <input type="text" name="nombreEquipo" placeholder="Nombre Equipo">
+        <button type="submit" onclick="window.location.href='/menuNivel'">Inscribir</button>
+        
+    </form>
+    {% with messages = get_flashed_messages () %}
+    {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+{% endblock %}

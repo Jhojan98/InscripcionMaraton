@@ -43,13 +43,13 @@ class EquipoResource(Resource):
             return e.messages, 400
 
 class EquipoIdResource(Resource):
-    def get(self, id):
+    def get(self, nombre):
         try:
-            equipo = Equipo.query.filter_by(id=id).one()
+            equipo = Equipo.query.filter_by(nombre=nombre).one()
             result = equipo_schema.dump(equipo)
             return jsonify(result)
         except NoResultFound:
-            abort(404, message="No se encontró el equipo con el id {}".format(id))
+            abort(404, message="No se encontró el equipo con el id {}".format(nombre))
         except Exception as e:
             abort(500, message="Se produjo un error al procesar la solicitud")
 

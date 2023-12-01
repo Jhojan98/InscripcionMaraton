@@ -11,7 +11,7 @@ from api_equipos.api import EquipoResource,EquipoIdResource,EquipoUsuarioResourc
 from api_maraton.api import MaratonResource,MaratonIdResource,MaratonInscribirResource
 from main import app,db
 
-import json
+
 api = Api(app)
 
 # Crear un cliente para las apis
@@ -24,8 +24,8 @@ api.add_resource(LoginResource, "/api/v1/login")
 api.add_resource(InscritoResource, "/api/v1/inscribir")
 api.add_resource(UsuarioIdResource, "/api/v1/usuarios", "/api/v1/usuarios/<string:nombre>")
 api.add_resource(EquipoResource, "/api/v3/equipos")
-api.add_resource(EquipoIdResource, "/api/v3/equipos","/api/v3/equipos/<int:id>")
-api.add_resource(EquipoUsuarioResource, "/api/v3/equipos", "/api/v3/equipos/<int:id_equipo>/<int:id_usuario>")
+api.add_resource(EquipoIdResource, "/api/v3/equipos","/api/v3/equipos/<string:nombre>")
+api.add_resource(EquipoUsuarioResource, "/api/v3/equipos", "/api/v3/equipos/<int:id_equipo>/registrar/<int:id_usuario>")
 api.add_resource(MaratonResource, "/api/v2/maratones")
 #api.add_resource(MaratonIdResource, "/api/v2/maratones","/api/v2/maratones/<int:id>/<int:id>")
 api.add_resource(MaratonInscribirResource, "/api/v2/maratones","/api/v2/maratones/<int:equipo_id>/<int:maraton_id>")
@@ -41,7 +41,7 @@ def login():
     if request.method == 'POST':
         message, category = clienteUsuarios.login_user(request.form['nombre'],request.form['password']) # Obtener el mensaje y la categoría del cliente
         if message == "El usuario y la contraseña son válidos":
-            return render_template('auth/home.html')
+            return redirect('/registroEquipo')
         flash(message, category) # Usar el flash con el mensaje y la categoría
         return render_template('auth/login.html') # Renderizar el template HTML que muestra el mensaje flash
     return render_template('auth/login.html')
@@ -69,8 +69,67 @@ def singup():
 
 @app.route('/home')
 def home():
-    return render_template('auth/menuNivel.html')
-# El resto de las rutas son similares, solo cambia el método del cliente que se usa
+    return render_template('auth/registroEquipo.html')
+
+@app.route('/menuNivel', methods=['GET', 'POST'])
+def menuNivel():
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            nivel = data['nivel']
+            print(f'Nivel: {nivel}')
+            
+            return redirect(url_for('menuNivel'))
+        
+        
+        except KeyError as e:
+            print(f"Error: {e}")    
+    else:
+        return render_template('auth/menuNivel.html')
+
+from flask import request, render_template
+
+@app.route('/registroEquipo', methods=['GET', 'POST'])
+def registroEquipo():
+    if request.method == 'POST':
+        try:
+            participante1 = request.form['participante1']
+            participante2 = request.form['participante2']
+            participante3 = request.form['participante3']
+            nombreLider = request.form['Lider']
+            nombreEquipo = request.form['nombreEquipo']
+            lider = clienteUsuarios.get_user_by_name(nombreLider)
+            part1 = clienteUsuarios.get_user_by_name(participante1)
+            print(part1)
+            part2 = clienteUsuarios.get_user_by_name(participante2)
+            part3 = clienteUsuarios.get_user_by_name(participante3)
+            if isinstance(lider, dict):
+                print("ENTRO")
+                category,message = lider.popitem()
+                flash(message,category)
+                clienteEquipos.create_equipo(nombreEquipo,lider['id'])
+                equipo = clienteEquipos.get_equipo_by_nombre(nombreEquipo)
+                print(equipo)
+                print(part1['id'])
+                print(equipo['id'])
+                mesasage = clienteEquipos.registrar_usuario(equipo['id'],part1['id'])
+                mesasage = clienteEquipos.registrar_usuario(equipo['id'],part2['id'])
+                mesasage = clienteEquipos.registrar_usuario(equipo['id'],part3['id'])
+            else:
+                print("no entro")
+                print(lider)
+                
+            print(f'Participante 1: {participante1}')
+            print(f'Participante 2: {participante2}')
+            print(f'Participante 3: {participante3}')
+            print(f'Nombre del equipo: {nombreEquipo}')
+
+            
+            return redirect(url_for('menuNivel'))
+        except KeyError as e:
+            print(f"Error: {e}")
+    return render_template('auth/registroEquipo.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
     

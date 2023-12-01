@@ -5,16 +5,16 @@ class EquiposClient:
         self.base_url = base_url 
         self.session = requests.Session() # Crear una sesión de requests para reutilizar la conexión
 
-    def get_equipo_by_id(self, id):
-        # Obtener los datos del equipo con el id dado
-        endpoint = self.base_url + f"/api/v3/equipos/{id}"
-        response = self.session.get(endpoint) # Usar la sesión para enviar la petición GET
+    def get_equipo_by_nombre(self, nombre):
+        # Obtener los datos del equipo con el nombre dado
+        endpoint = self.base_url + f"/api/v3/equipos/{nombre}"
+        response = self.session.get(endpoint) 
         return response.json()
 
     def get_all_equipos(self):
         # Obtener los datos de todos los equipos
         endpoint = self.base_url + "/api/v3/equipos"
-        response = self.session.get(endpoint) # Usar la sesión para enviar la petición GET
+        response = self.session.get(endpoint)
         return response.json()
 
     def create_equipo(self, nombre, lider_id):
@@ -24,7 +24,7 @@ class EquiposClient:
             "nombre": nombre,
             "lider_id": lider_id
         }
-        response = self.session.post(endpoint, json=data) # Usar la sesión para enviar la petición POST
+        response = self.session.post(endpoint, json=data) 
         return response.json()
 
     def update_equipo(self, id, nombre, lider_id, maraton_id, estado_id):

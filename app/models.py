@@ -152,12 +152,14 @@ class InscritoSchema(ma.Schema):
 
 class UsuarioSchema(Schema):
     nombre = fields.Str(required=True)
+    id=fields.Str(required=False)
     email = fields.Email(required=True, unique=True)
     contraseña = fields.Str(required=True, validate=validate.Length(min=6))
     tipo_id = fields.Int(required=True, validate=validate.Range(min=1))
 
 class EquipoSchema(Schema):
     nombre = fields.Str(required=True, unique=True)
+    id=fields.Str(required=False)
     lider_id = fields.Int(required=True, validate=validate.Range(min=1))
     maraton_id = fields.Int(required=True, validate=validate.Range(min=1))
     estado_id = fields.Int(required=True, validate=validate.Range(min=1))

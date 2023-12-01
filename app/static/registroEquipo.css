@@ -1,0 +1,11 @@
+.form-box {
+    margin-top: -100px; 
+    width: 600px;
+    height: 500px;
+    padding: 40px;  
+    background: lightgray;
+    text-align: center;
+    position: absolute;
+    border-radius: 50px;
+    
+}
