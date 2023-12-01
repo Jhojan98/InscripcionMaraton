@@ -1,5 +1,5 @@
 import requests
-import json
+
 class UsuariosClient:
     def __init__(self, base_url):
         self.base_url = base_url
@@ -30,21 +30,23 @@ class UsuariosClient:
         }
         response = self.session.post(endpoint, json=data) # Usar la sesión para enviar la petición POST
         result = response.json()
-        """
-        if response.status_code == 200:
-            message = result["message"]
-            category = "success"
-        else:
-            message = result["message"]
-            category = "error"
-        """
         self.token = None
         categ, message = result.popitem()
         print(categ)
         print(message)
         category = "success"
         return message,category
-
+    
+    def inscribir_usuario(self, nombre, materia_id):
+        # Crear un nuevo inscrito con los datos dados
+        endpoint = self.base_url + "/api/v1/inscribir"
+        data = {
+            "nombre": nombre,
+            "materia": materia_id
+        }
+        response = self.session.post(endpoint, json=data)
+        return response.json()
+    
     def update_user(self, id, nombre, email, contraseña, tipo):
         # Actualizar los datos del usuario con el id dado
         endpoint = self.base_url + f"/api/v1/usuarios/{id}"

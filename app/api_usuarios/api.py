@@ -3,7 +3,7 @@ from flask import request, jsonify
 from flask_restful import  Resource,abort
 from flask_marshmallow import Marshmallow
 from main import db,app
-from models import  Usuario,usuarios_schema,usuario_schema
+from models import  Usuario,usuarios_schema,usuario_schema,Materia,Inscrito
 from sqlalchemy.orm.exc import NoResultFound # Importar la excepción NoResultFound
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.orm.exc import NoResultFound # Importar la excepción NoResultFound
@@ -26,7 +26,25 @@ class LoginResource(Resource):
         except Exception as e:
             return {"error": "Se produjo un error al procesar la solicitud"}, 500
 
-        
+class InscritoResource(Resource):
+    def post(self):
+        try:
+            data = request.get_json()
+            nombre = data.get("nombre",None)
+            materia_id = data.get("materia",None)
+            usuario = Usuario.query.filter_by(nombre=nombre).first()
+            materia = Materia.query.filter_by(id=materia_id).first()
+            #inscrito = Inscrito.query.filter_by(usuario=usuario.get, materia=materia.id).first()
+            #if inscrito:
+            #    return {"error": "El usuario ya está inscrito en la materia"}, 409
+            #else:
+            inscrito = Inscrito(usuario=usuario.id, materia=materia.id)
+            db.session.add(inscrito)
+            db.session.commit()
+            return {"message": "El usuario fue inscrito en la materia con éxito"}, 201
+        except Exception as e:
+            return {"error": "Se produjo un error al procesar la solicitud"}, 500
+                
 class UsuarioResource(Resource):
     def get(self):
         usuarios = Usuario.query.all()
