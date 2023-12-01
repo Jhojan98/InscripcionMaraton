@@ -1,4 +1,4 @@
-    {% extends './base.html'%}
+    {% extends './base.html' %}
 
     {% block title %}Registro Maratón{% endblock %}
 
@@ -13,10 +13,9 @@
 
         <form action="{{ url_for('singup') }}" method="POST" class="form-box animate__animated animate__slideInUp">
         <h2 class="form-tittle">Registrarse</h2>
-
-        <div class="Participante">
+           
             <input type="text" name="participante" placeholder="Nombre participante ">
-            <input type="email" name="correo" placeholder="Correo">            
+            <input type="email" name="correo" placeholder="Correo">  
             <select name="materia" id="materia">
                 <option value="" disabled selected>Materia cursando</option>
                 <option value="basico" >Básico</option>
@@ -24,11 +23,25 @@
                 <option value="avanzado">Avanzado</option>
                 <option value="profesional">Profesional</option>
             </select>
-            <input type="password" placeholder="Contraseña">
-        </div>
+            <input name="password"type="password" placeholder="Contraseña">
+
         <div class="Botones">
             <button type="button" class="Volver" onclick="window.location.href='{{ url_for('login') }}'">Volver</button>
-            <button type="submit" class="Registrar">Registrar</button>
+            <button type="submit" class="Registrar" onclick="showAlert()">Registrar</button>
         </div>
+
+        
+        <script>
+            function showAlert() {
+                // Obtener el mensaje que deseas mostrar
+                var message = "El participante ha sido registrado.";
+
+                // Mostrar la alerta
+                alert(message);
+
+                // Enviar el formulario después de mostrar la alerta
+                document.getElementById("loginForm").submit();
+            }
+        </script>
 
     {% endblock %}
