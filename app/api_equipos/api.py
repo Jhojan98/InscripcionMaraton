@@ -2,15 +2,17 @@ from flask import request, jsonify
 from flask_restful import  Resource,abort
 from flask_marshmallow import Marshmallow
 from main import db,app
-from models import  equipo_schema,Equipo,Usuario,Integrante
+from models import  equipo_schema,Equipo,Usuario,Integrante,Inscrito
 from sqlalchemy.orm.exc import NoResultFound # Importar la excepción NoResultFound
 from marshmallow.exceptions import ValidationError
+from sqlalchemy import exists
 
 class EquipoResource(Resource):
     def post(self):
         try:
             data = request.get_json()
-            
+            data["maraton_id"] = 1
+            data["estado_id"] = 1
             existing_equipo = Equipo.query.filter_by(nombre=data.get("nombre",None)).first()
             miembro_equipo = Integrante.query.filter_by(usuario_id=data.get("lider_id",None)).first()
             existing_usuario = Usuario.query.filter_by(id=data.get("lider_id",None)).first()
@@ -23,6 +25,7 @@ class EquipoResource(Resource):
             lider_equipo =  Equipo.query.filter_by(lider_id=data.get("lider_id",None)).first()
             if lider_equipo:
                 return {"error": "Ya existe un equipo con el usuario como lider"}, 400
+            
             equipo = equipo_schema.load(data)
             equipo_model = Equipo(**equipo)
             db.session.add(equipo_model)
@@ -87,14 +90,14 @@ class EquipoIdResource(Resource):
     
  #registrar_usuario   
 class EquipoUsuarioResource(Resource):
-    """
-    def post(self, equipo_id, usuario_id):
-        return  jsonify({"mensaje": "El equipo con el id {} fue recibido".format(equipo_id)})
-    """
+   
     def post(self, id_equipo, id_usuario):
         try:
             equipo = Equipo.query.filter_by(id=id_equipo).one()
             usuario = Usuario.query.filter_by(id=id_usuario).one()
+            existe = db.session.query(exists().where(Integrante.usuario_id == id_usuario)).scalar()
+            if existe:
+                return {"error": "El usuario ya está registrado en algun equipo"}, 400
             if usuario in equipo.usuarios:
                 return {"error": "El usuario ya está registrado en el equipo"}, 400
             if len(equipo.usuarios) == 4:

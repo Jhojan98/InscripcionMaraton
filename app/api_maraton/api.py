@@ -2,7 +2,7 @@ from flask import request, jsonify
 from flask_restful import  Resource,abort
 from flask_marshmallow import Marshmallow
 from main import db,app
-from models import  Maraton,maraton_schema,Equipo
+from models import  Maraton,maraton_schema,Equipo,Usuario,Materia
 from sqlalchemy.orm.exc import NoResultFound # Importar la excepción NoResultFound
 from marshmallow.exceptions import ValidationError
 
@@ -80,8 +80,36 @@ class MaratonIdResource(Resource):
             abort(404, message="No se encontró la maratón con el id {}".format(varid))
         except Exception as e:
             abort(500, message="Se produjo un error al procesar la solicitud")
+class MaratonInscribirResource(Resource):           
+    def post(self, equipo_id, maraton_id):
+        try:
+            equipo = Equipo.query.filter_by(id=equipo_id).one()
+            maraton = Maraton.query.filter_by(id=maraton_id).one()
+            if equipo.maraton_id != 1:
+                return {"error": "El equipo ya está inscrito en otra maratón"}, 400
+            if maraton.cupos == 0:
+                return {"error": "La maratón no tiene cupos disponibles"}, 400
+            # Iterar sobre los integrantes del equipo
+            for usuario in equipo.usuarios: # Iterar por los usuarios del equipo
+                usuario = Usuario.query.filter_by(id=usuario.usuario_id).one() # Buscar el usuario correspondiente
+                print(usuario.usuario_id)
+                for materia in usuario.materias: # Iterar por los inscritos del usuario
+                    materia = Materia.query.filter_by(id=materia.id).one() # Buscar la materia correspondiente
+                    print(materia.nivel_id)
+                    if materia.nivel_id != maraton.nivel_id and materia.nivel_id != "Elite": # Comparar el nivel de la materia con el de la maratón
+                        return {"error": "El equipo no cumple con el nivel requerido para la maratón"}, 400
 
-    
+            equipo.maraton_id = maraton_id
+            maraton.cupos -= 1
+            db.session.commit()
+            return {"message": "El equipo fue inscrito con éxito en la maratón"}, 201
+        except NoResultFound:
+            abort(404, message="No se encontró el equipo o la maratón con los ids dados")
+        except Exception as e:
+            abort(500, message="Se produjo un error al procesar la solicitud")
+
+
+    """ 
     def inscribir_equipo(self, equipo_id, maraton_id):
         try:
             equipo = Equipo.query.filter_by(id=equipo_id).one()
@@ -101,3 +129,4 @@ class MaratonIdResource(Resource):
             abort(404, message="No se encontró el equipo o la maratón con los ids dados")
         except Exception as e:
             abort(500, message="Se produjo un error al procesar la solicitud")
+    """

@@ -86,8 +86,8 @@ class Equipo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(64), unique=True, nullable=False)
     lider_id = db.Column(db.Integer, db.ForeignKey("usuario.id"), nullable=False)
-    maraton_id = db.Column(db.Integer, db.ForeignKey("maraton.id"), nullable=False)
-    estado_id = db.Column(db.Integer, db.ForeignKey("estado.id"), nullable=False)
+    maraton_id = db.Column(db.Integer, db.ForeignKey("maraton.id"), nullable=False,default=1)
+    estado_id = db.Column(db.Integer, db.ForeignKey("estado.id"), nullable=False,default=1)
     usuarios = db.relationship("Usuario", secondary="integrante", back_populates="equipos")
     def to_dict(self):
         return {

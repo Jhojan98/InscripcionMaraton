@@ -8,7 +8,7 @@ import os
 from flask_restful import Api
 from api_usuarios.api import UsuarioResource,UsuarioIdResource,LoginResource,InscritoResource
 from api_equipos.api import EquipoResource,EquipoIdResource,EquipoUsuarioResource
-from api_maraton.api import MaratonResource,MaratonIdResource
+from api_maraton.api import MaratonResource,MaratonIdResource,MaratonInscribirResource
 from main import app,db
 
 import json
@@ -24,11 +24,11 @@ api.add_resource(LoginResource, "/api/v1/login")
 api.add_resource(InscritoResource, "/api/v1/inscribir")
 api.add_resource(UsuarioIdResource, "/api/v1/usuarios", "/api/v1/usuarios/<string:nombre>")
 api.add_resource(EquipoResource, "/api/v3/equipos")
-api.add_resource(EquipoIdResource, "/api/v3/equipos","/api/v1/equipos/<int:id>")
-api.add_resource(EquipoUsuarioResource, "/api/v3/equipos", "/api/v1/equipos/<int:id_equipo>/<int:id_usuario>")
+api.add_resource(EquipoIdResource, "/api/v3/equipos","/api/v3/equipos/<int:id>")
+api.add_resource(EquipoUsuarioResource, "/api/v3/equipos", "/api/v3/equipos/<int:id_equipo>/<int:id_usuario>")
 api.add_resource(MaratonResource, "/api/v2/maratones")
-api.add_resource(MaratonIdResource, "/api/v2/maratones","/api/v1/maratones/<int:id>")
-
+#api.add_resource(MaratonIdResource, "/api/v2/maratones","/api/v2/maratones/<int:id>/<int:id>")
+api.add_resource(MaratonInscribirResource, "/api/v2/maratones","/api/v2/maratones/<int:equipo_id>/<int:maraton_id>")
 
 @app.route('/')
 def index():
@@ -59,7 +59,7 @@ def singup():
         message, category = clienteUsuarios.create_user(nombre, correo, password, 1)
         
         if message == "El usuario fue creado con éxito":
-            h = clienteUsuarios.inscribir_usuario(nombre,materia)
+            clienteUsuarios.inscribir_usuario(nombre,materia)
             return redirect('/login')
         else:
             flash(message,category)
@@ -69,7 +69,7 @@ def singup():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('auth/menuNivel.html')
 # El resto de las rutas son similares, solo cambia el método del cliente que se usa
 if __name__ == "__main__":
     app.run(debug=True)

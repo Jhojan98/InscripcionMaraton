@@ -34,10 +34,6 @@ class InscritoResource(Resource):
             materia_id = data.get("materia",None)
             usuario = Usuario.query.filter_by(nombre=nombre).first()
             materia = Materia.query.filter_by(id=materia_id).first()
-            #inscrito = Inscrito.query.filter_by(usuario=usuario.get, materia=materia.id).first()
-            #if inscrito:
-            #    return {"error": "El usuario ya está inscrito en la materia"}, 409
-            #else:
             inscrito = Inscrito(usuario=usuario.id, materia=materia.id)
             db.session.add(inscrito)
             db.session.commit()
