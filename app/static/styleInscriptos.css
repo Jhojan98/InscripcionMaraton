@@ -1,0 +1,58 @@
+/* custom.css */
+
+body {
+    background-color: black;
+    color: white;
+}
+
+
+h3 {
+    text-align: center;
+    margin-bottom: 100px; 
+}
+
+h4 {
+    text-align: center;
+}   
+
+
+
+
+.btn-secondary[name="btnSalir"] {
+    background-color: #000;
+    border: 1px solid   #fff;
+    color: #fff;
+}
+
+.btn-secondary[name="btnSalir"]:hover {
+    color: #000;
+}
+
+table.table {
+    background-color: black;
+    color: white;
+    border: 1px solid white; 
+}
+
+/* Estilo para las celdas de datos y encabezados */
+table.table td, table.table th {
+    border: 1px solid white; 
+    padding: 8px; 
+}
+
+/* Estilos para el hover de las filas en las tablas específicas por clase */
+.tablaBasica tbody tr:hover {
+    background-color: #104069; 
+}
+
+.tablaIntermedia tbody tr:hover {
+    background-color: #1f4618;  
+}
+
+.tablaAvanzada tbody tr:hover {
+    background-color: #6b1c1c;  
+}
+
+.tablaProfesional tbody tr:hover {
+    background-color: #5e1c6b;  
+}
