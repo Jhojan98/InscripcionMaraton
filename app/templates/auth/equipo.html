@@ -1,0 +1,50 @@
+{%  extends './base.html' %}
+
+{% block title %}Equipo Maratón{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> 
+    <link href="style/equipo2.css" rel="stylesheet">
+    <link href="style/equipo.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <a name="btnSalir" href="#" class="btn btn-secondary" type="button" onclick="window.location.href='{{ url_for('login') }}'">Salir</a>
+            <h3 class="text-center">
+                Maratón de programación
+            </h3>
+            <button name="btnAdmin"type="button" class="btn btn-link">Volver </button>
+            <div class="row">
+                    <h4>
+                        Equipo:
+                    </h4>
+                    <!-- Tabla Básica -->
+                    <table class="table tablaEquipo">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre equipo</th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Materia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Mark@jhgfdsa.com</td>
+                                <td>Materia</td>
+                            </tr>
+                        </tbody>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+{% endblock %}
