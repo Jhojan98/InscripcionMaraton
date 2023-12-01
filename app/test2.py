@@ -100,8 +100,20 @@ def registroEquipo():
             return redirect(url_for('menuNivel'))
         except KeyError as e:
             print(f"Error: {e}")
-
     return render_template('auth/registroEquipo.html')
+
+#-----------------Listar Participantes ------------------
+@app.route('/equipoMaraton', methods=['GET', 'POST'])
+def equipoMaraton():
+    if request.method == 'POST':
+        try:
+            #Llamamos la baase de datos e igualamos los campos a mostrar
+    
+            return render_template('auth/equipo.html')
+        
+        except KeyError as e:
+            print(f"Error: {e}")
+    return  render_template('auth/equipo.html')
 
 
 if __name__ == "__main__":
