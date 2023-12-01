@@ -65,6 +65,22 @@ def singup():
     else:
         return render_template('auth/singup.html')
 
+@app.route('/menuNivel', methods=['GET', 'POST'])
+def menuNivel():
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            nivel = data['nivel']
+            print(f'Nivel: {nivel}')
+            
+            return jsonify({'message': 'Nivel recibido exitosamente'})
+        
+        except KeyError as e:
+            print(f"Error: {e}")    
+    else:
+        return render_template('auth/menuNivel.html')
+        
+        
 @app.route('/home')
 def home():
     return render_template('home.html')
