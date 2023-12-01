@@ -25,6 +25,29 @@ body, html{
     border-radius: 20px; /* Ajusta el valor según tu preferencia */
 }
 
+.Participante input[type="email"] {
+    border: 2px solid #2331fd;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    width: 200px;
+    border-radius: 22px;
+    color: black;
+    transition: 0.25s;
+}
+
+.Participante input[type="email"]:focus {
+    width: 280px;
+}
+
+.Participante input[type="email"]::placeholder {
+    color: gr;
+}
+
+.Participante input[type="email"]:hover {
+    border: 2px solid #2331fd;
+}
 
 .form-box select {
     border: 2px solid #2331fd;
@@ -42,7 +65,7 @@ body, html{
     width: 280px;
 }
 
-/* Estilo para las opciones del select */
+
 .form-box select option {
     background: lightgray; 
     color: black;
@@ -52,26 +75,6 @@ body, html{
     border: 2px solid #2331fd;
 }
 
-.Usuario,
-.Participante1,
-.Participante2,
-.Participante3 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-.Usuario{
-    border: 2px solid rgb(185, 186, 194);
-}
-
-.Participante1 select,
-.Participante2 select,
-.Participante3 select {
-    width: 25%;
-    
-}
 
 .form-box {
     margin-top: -100px; 
