@@ -39,60 +39,29 @@ def index():
 @app.route('/login', methods=['GET', 'POST']) 
 def login(): 
     if request.method == 'POST':
-        message = clienteUsuarios.login_user(request.form['nombre'],request.form['password'])
-        flash(message)
+        
+        
         return redirect(url_for('login'))
     else:
         return render_template('auth/login.html')
-    """
-        if not user:
-            flash('Usuario no encontrado')
-            return redirect(url_for('login'))
-        
-        if not user.check_password(request.form['password']):
-            flash('Contraseña incorrecta')
-            return redirect(url_for('login'))
-    
-        flash('Bienvenido {}'.format(user))
-        return redirect(url_for('home'))
-    
-    else:
-        return render_template('auth/login.html')
-    """
-"""
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        try:
-            usuario = clienteUsuarios.get_user_by_name(request.form['usuario'])
-            if not usuario:
-                return 
-            nombUsuario = request.form['usuario']
-            password = request.form['password']
-            print(f"Usuario: {nombUsuario}, Password: {password}")
-            
-            
-            
-            return render_template('auth/home.html')
-
-        except KeyError as e:
-            print(f"Error: {e}")
-    else:
-        return render_template('auth/login.html')
-"""
 
 @app.route('/singup', methods=['GET', 'POST'])
 def singup():
     if request.method == 'POST':
         try:
-            participante1 = request.form['participante1']
-            codigo1 = request.form['codigo1']
-            materia1 = request.form['materia1']
-            # Repite lo mismo para participante2, codigo2, materia2, participante3, codigo3, materia3, usuario, password
+            participante = request.form['participante']
+            correo = request.form['correo']
+            materia = request.form['materia']
+            password = request.form['password']
+            
+            print(f'Participante: {participante}')
+            print(f'Correo: {correo}')
+            print(f'Materia: {materia}')
+            print(f'Contraseña: {password}')
             
             return render_template('auth/login.html')
         except KeyError as e:
-            print(f"Error: {e}")
+            print(f"Error: {e}")    
     else:
         return render_template('auth/singup.html')
 
