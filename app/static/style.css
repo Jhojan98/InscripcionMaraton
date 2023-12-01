@@ -1,73 +1,90 @@
 body {
     background-color: black;
     color: white;
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Elimina el relleno predeterminado */
+    overflow-x: hidden; /* Evita el deslizador lateral */
 }
 
-h1{
+h1 {
     color: white;
 }
 
+/* Estilo para el elemento fijo */
+#elementoFijo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para las diferentes secciones */
 div[name="Basica"] {
-    background-color: lightseagreen; 
-    color: #ffffff; 
+    background-color: lightseagreen;
+    color: #ffffff;
 }
+
 div[name="Intermedia"] {
-    background-color: rgb(89, 230, 89); 
-    color: #ffffff; 
+    background-color: rgb(89, 230, 89);
+    color: #ffffff;
 }
+
 div[name="Avanzada"] {
-    background-color: purple; 
-    color: #ffffff; 
+    background-color: purple;
+    color: #ffffff;
 }
+
 div[name="Profesional"] {
-    background-color: rgb(217, 99, 56); 
-    color: #ffffff; 
+    background-color: rgb(217, 99, 56);
+    color: #ffffff;
 }
 
+/* Estilo para el botón de salir */
 a[name="btnSalir"].btn-secondary {
-    background-color: black; 
-    color: #ffffff; /
-    border-color: #ffffff; 
+    background-color: black;
+    color: #ffffff;
+    border-color: #ffffff;
 }
 
+/* Estilo para el botón de administrador */
 button[name="btnAdmin"] {
     float: right;
-}   
-
-a[name="btnBasica"].btn-primary {
-    background-color: rgb(0, 132, 255) !important; 
-    color: #ffffff; 
-    border-color: blue; 
 }
+
+/* Estilos para los botones de niveles */
+a[name="btnBasica"].btn-primary {
+    background-color: rgb(0, 132, 255) !important;
+    color: #ffffff;
+    border-color: blue;
+}
+
 a[name="btnIntermedia"].btn-primary {
-    background-color: rgb(9, 100, 9); 
-    color: #ffffff; 
-    border-color: green; 
+    background-color: rgb(9, 100, 9);
+    color: #ffffff;
+    border-color: green;
 }
 
 a[name="btnAvanzada"].btn-primary {
-    background-color: rgb(56, 1, 56); 
-    color: #ffffff; 
+    background-color: rgb(56, 1, 56);
+    color: #ffffff;
     border-color: #8e44ad;
 }
 
 a[name="btnProfesional"].btn-primary {
-    background-color: rgb(146, 41, 2); 
-    color: #ffffff; 
+    background-color: rgb(146, 41, 2);
+    color: #ffffff;
     border-color: orangered;
 }
 
-
-
-
-
-
+/* Estilo personalizado para los botones */
 .btn-custom {
     background-color: black;
     border: 1px solid white;
     color: white;
 }
-
 
 
 
