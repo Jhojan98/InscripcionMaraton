@@ -115,6 +115,13 @@ def equipoMaraton():
             print(f"Error: {e}")
     return  render_template('auth/equipo.html')
 
+@app.route('/inscriptos', methods=['GET', 'POST'])
+def inscriptos():
+        try:
+            return render_template('auth/inscriptos.html')
+        
+        except KeyError as e:
+            print(f"Error: {e}")
 
 if __name__ == "__main__":
     app.run(debug=True)
