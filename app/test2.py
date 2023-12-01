@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect, flash
-
+from flask import jsonify
 from api_usuarios.cliente import UsuariosClient
 from api_equipos.cliente import EquiposClient
 from api_maraton.cliente import MaratonesClient 
@@ -40,7 +40,7 @@ def index():
 def login(): 
     if request.method == 'POST':
         
-        return redirect(url_for('login'))
+        return redirect(url_for('registroEquipo'))
     else:
         return render_template('auth/login.html')
 
@@ -72,18 +72,38 @@ def menuNivel():
             nivel = data['nivel']
             print(f'Nivel: {nivel}')
             
-            return jsonify({'message': 'Nivel recibido exitosamente'})
+            return redirect(url_for('menuNivel'))
+        
         
         except KeyError as e:
             print(f"Error: {e}")    
     else:
         return render_template('auth/menuNivel.html')
-        
-        
-@app.route('/home')
-def home():
-    return render_template('home.html')
-# El resto de las rutas son similares, solo cambia el método del cliente que se usa
+
+from flask import request, render_template
+
+@app.route('/registroEquipo', methods=['GET', 'POST'])
+def registroEquipo():
+    if request.method == 'POST':
+        try:
+            participante1 = request.form['participante1']
+            participante2 = request.form['participante2']
+            participante3 = request.form['participante3']
+            nombreEquipo = request.form['nombreEquipo']
+
+            print(f'Participante 1: {participante1}')
+            print(f'Participante 2: {participante2}')
+            print(f'Participante 3: {participante3}')
+            print(f'Nombre del equipo: {nombreEquipo}')
+
+            # Suponiendo que 'menuNivel' es la ruta correcta
+            return redirect(url_for('menuNivel'))
+        except KeyError as e:
+            print(f"Error: {e}")
+
+    return render_template('auth/registroEquipo.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
     
