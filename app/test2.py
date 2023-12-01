@@ -40,7 +40,6 @@ def index():
 def login(): 
     if request.method == 'POST':
         
-        
         return redirect(url_for('login'))
     else:
         return render_template('auth/login.html')
