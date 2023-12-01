@@ -1,56 +1,73 @@
 body {
     background-color: black;
-    color: white; /* Texto visible en el fondo negro */
+    color: white;
 }
 
-.table {
-    color: white; /* Texto en la tabla */
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo de la tabla con opacidad */
-    border: 2px solid white; /* Borde blanco de 2 píxeles */
+h1{
+    color: white;
 }
 
-.table th,
-.table td {
-    border: 2px solid white; /* Borde blanco de 2 píxeles para celdas */
-    padding: 8px; /* Espaciado interno para mejorar la legibilidad */
+div[name="Basica"] {
+    background-color: lightseagreen; 
+    color: #ffffff; 
+}
+div[name="Intermedia"] {
+    background-color: rgb(89, 230, 89); 
+    color: #ffffff; 
+}
+div[name="Avanzada"] {
+    background-color: purple; 
+    color: #ffffff; 
+}
+div[name="Profesional"] {
+    background-color: rgb(217, 99, 56); 
+    color: #ffffff; 
 }
 
-.btn,
-.jumbotron,
-.custom-jumbotron-1,
-.custom-jumbotron-2,
-.custom-jumbotron-3,
-.custom-jumbotron-4 {
-    color: white; /* Texto en botones, jumbotrons y jumbotrons personalizados */
+a[name="btnSalir"].btn-secondary {
+    background-color: black; 
+    color: #ffffff; /
+    border-color: #ffffff; 
 }
 
-.custom-jumbotron-1 {
-    background-color: #3498db; /* Azul */
-    opacity: .75;
+button[name="btnAdmin"] {
+    float: right;
+}   
+
+a[name="btnBasica"].btn-primary {
+    background-color: rgb(0, 132, 255) !important; 
+    color: #ffffff; 
+    border-color: blue; 
+}
+a[name="btnIntermedia"].btn-primary {
+    background-color: rgb(9, 100, 9); 
+    color: #ffffff; 
+    border-color: green; 
 }
 
-.custom-jumbotron-2 {
-    background-color: #2ecc71; /* Verde */
-    opacity: .75;
+a[name="btnAvanzada"].btn-primary {
+    background-color: rgb(56, 1, 56); 
+    color: #ffffff; 
+    border-color: #8e44ad;
 }
 
-.custom-jumbotron-3 {
-    background-color: #e74c3c; /* Rojo */
-    opacity: .75;
-
+a[name="btnProfesional"].btn-primary {
+    background-color: rgb(146, 41, 2); 
+    color: #ffffff; 
+    border-color: orangered;
 }
 
-.custom-jumbotron-4 {
-    background-color: #f39c12; /* Amarillo */
-    opacity: .75;
+
+
+
+
+
+.btn-custom {
+    background-color: black;
+    border: 1px solid white;
+    color: white;
 }
 
-.custom-jumbotron-1,
-.custom-jumbotron-2,
-.custom-jumbotron-3,
-.custom-jumbotron-4 {
-    margin-bottom: 20px; /* Espacio entre los jumbotrons personalizados */
-}
 
 
 
