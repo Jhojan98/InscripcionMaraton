@@ -103,8 +103,8 @@ def registroEquipo():
     return render_template('auth/registroEquipo.html')
 
 #-----------------Listar Participantes ------------------
-@app.route('/equipoMaraton', methods=['GET', 'POST'])
-def equipoMaraton():
+@app.route('/equipo', methods=['GET', 'POST'])
+def equipo():
     if request.method == 'POST':
         try:
             #Llamamos la baase de datos e igualamos los campos a mostrar
