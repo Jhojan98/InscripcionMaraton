@@ -58,3 +58,4 @@ class MaratonesClient:
         endpoint = self.base_url + f"/api/v2/maratones/{maraton_id}/inscribir/{equipo_id}"
         response = self.session.post(endpoint) # Usar la sesión para enviar la petición POST
         return response.json()
+    

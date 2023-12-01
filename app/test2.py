@@ -35,64 +35,32 @@ def index():
     usuarios =  clienteUsuarios.get_all_users()
     return render_template('index.html', usuarios=usuarios)
 
-
-@app.route('/login', methods=['GET', 'POST']) 
+@app.route('/login', methods=['GET', 'POST'])
 def login(): 
     if request.method == 'POST':
-        message = clienteUsuarios.login_user(request.form['nombre'],request.form['password'])
-        flash(message)
-        return redirect(url_for('login'))
-    else:
-        return render_template('auth/login.html')
-    """
-        if not user:
-            flash('Usuario no encontrado')
-            return redirect(url_for('login'))
-        
-        if not user.check_password(request.form['password']):
-            flash('Contraseña incorrecta')
-            return redirect(url_for('login'))
-    
-        flash('Bienvenido {}'.format(user))
-        return redirect(url_for('home'))
-    
-    else:
-        return render_template('auth/login.html')
-    """
-"""
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        try:
-            usuario = clienteUsuarios.get_user_by_name(request.form['usuario'])
-            if not usuario:
-                return 
-            nombUsuario = request.form['usuario']
-            password = request.form['password']
-            print(f"Usuario: {nombUsuario}, Password: {password}")
-            
-            
-            
+        message, category = clienteUsuarios.login_user(request.form['nombre'],request.form['password']) # Obtener el mensaje y la categoría del cliente
+        if message == "El usuario y la contraseña son válidos":
             return render_template('auth/home.html')
+        flash(message, category) # Usar el flash con el mensaje y la categoría
+        return render_template('auth/login.html') # Renderizar el template HTML que muestra el mensaje flash
+    return render_template('auth/login.html')
 
-        except KeyError as e:
-            print(f"Error: {e}")
-    else:
-        return render_template('auth/login.html')
-"""
 
 @app.route('/singup', methods=['GET', 'POST'])
 def singup():
-    if request.method == 'POST':
-        try:
-            participante1 = request.form['participante1']
-            codigo1 = request.form['codigo1']
-            materia1 = request.form['materia1']
-            # Repite lo mismo para participante2, codigo2, materia2, participante3, codigo3, materia3, usuario, password
-            
-            return render_template('auth/login.html')
-        except KeyError as e:
-            print(f"Error: {e}")
+    if request.method == 'POST': 
+        nombre = request.form['participante']
+        correo = request.form['correo']
+        #materia = request.form['materia']
+        password = request.form['password']
+
+        # Llamar al método create_user de tu instancia de cliente y pasarle los datos del formulario
+        message, category = clienteUsuarios.create_user(nombre, correo, password, 1)
+        if message == "El usuario fue creado con éxito":
+            return redirect('/login')
+        else:
+            flash(message,category)
+            return render_template('auth/singup.html')
     else:
         return render_template('auth/singup.html')
 

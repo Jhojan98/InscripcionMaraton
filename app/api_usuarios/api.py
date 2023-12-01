@@ -36,23 +36,28 @@ class UsuarioResource(Resource):
     def post(self):
         try:
             data = request.get_json()
-            
+            nombre = data.get("nombre",None)
+            email = data.get("email",None)
+            contraseña = data.get("contraseña",None)
+            tipo = data.get("tipo",None)
+            if not nombre:
+                 return {"message": "Falto el nombre"}, 400
             existing_user_name = Usuario.query.filter_by(nombre=data.get("nombre",None)).first()
             existing_user_email = Usuario.query.filter_by(email=data.get("email",None)).first()
 
             if existing_user_name:
-                return {"error": "Ya existe un usuario con el mismo nombre"}, 400
+                return {"message": "Ya existe un usuario con el mismo nombre"}, 400
 
             if existing_user_email:
-                return {"error": "Ya existe un usuario con el mismo correo"}, 400
+                return {"message": "Ya existe un usuario con el mismo correo"}, 400
             
-            print(data.get("nombre",None))
+            
             usuario = usuario_schema.load(data)
             usuario_model = Usuario(**usuario)
             db.session.add(usuario_model)
             db.session.commit()
             
-            return {"message": "El usuario fue creado con éxito"}, 201
+            return {"message": "El usuario fue creado con éxito"}, 200
 
         except ValidationError as e:
             return e.messages, 400
