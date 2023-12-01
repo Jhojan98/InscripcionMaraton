@@ -25,28 +25,20 @@ body, html{
     border-radius: 20px; /* Ajusta el valor según tu preferencia */
 }
 
-.Participante input[type="email"] {
+.form-box input[name="correo"] {
     border: 2px solid #2331fd;
     background: none;
     display: block;
     margin: 20px auto;
-    padding: 10px;
+    padding: 10px; 
     width: 200px;
     border-radius: 22px;
     color: black;
     transition: 0.25s;
 }
 
-.Participante input[type="email"]:focus {
+.form-box input[name="correo"]:focus {
     width: 280px;
-}
-
-.Participante input[type="email"]::placeholder {
-    color: gr;
-}
-
-.Participante input[type="email"]:hover {
-    border: 2px solid #2331fd;
 }
 
 .form-box select {
