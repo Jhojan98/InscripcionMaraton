@@ -1,15 +1,7 @@
 body {
     background-color: black;
     color: white;
-}
-
-.tablaEquipo {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
-}
-
-.tablaEquipo th,
-.tablaEquipo td {
-    border: 1px solid white;
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Elimina el relleno predeterminado */
+    overflow-x: hidden; /* Evita el deslizador lateral */
 }
