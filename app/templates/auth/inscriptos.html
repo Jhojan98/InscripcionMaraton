@@ -1,0 +1,108 @@
+{%  extends './base.html' %}
+{% block title %}Inscriptos Maratón{% endblock %}
+
+{% block customCSS %}
+    <link href="static/inscritos.css" rel="stylesheet">
+    <link href="static/styleInscriptos.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <a name="btnSalir" href="#" class="btn btn-secondary" type="button" onclick="window.location.href='{{ url_for('login') }}'">Salir</a>
+                <h3 class="text-center">
+                    Maratón de programación
+                </h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4>
+                            Básica
+                        </h4>
+                        <!-- Tabla Básica -->
+                        <table class="table tablaBasica">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre equipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                </tr>
+                            </tbody>
+                        <!-- Tabla Intermedia-->
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <h4>
+                            Intermedia
+                        </h4>
+                        <table  class="table tablaIntermedia">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre equipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>
+                            Avanzada
+                        </h4>
+                        <!-- Tabla Avanzada-->
+                        <table class="table tablaAvanzadaa">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <h4>
+                            Profesional
+                        </h4>
+                        <!-- Tabla Profesional-->
+                        <table class="table tablaProfesional">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre equipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+{% endblock %}
