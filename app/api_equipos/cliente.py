@@ -47,6 +47,6 @@ class EquiposClient:
 
     def registrar_usuario(self, equipo_id, usuario_id):
         # Registrar un usuario en un equipo
-        endpoint = self.base_url + f"/api/v3/equipos/{equipo_id}/registrar/{usuario_id}"
+        endpoint = self.base_url + f"/api/v3/equipos/{usuario_id}/registrar/{equipo_id}"
         response = self.session.post(endpoint) # Usar la sesión para enviar la petición POST
         return response.json()

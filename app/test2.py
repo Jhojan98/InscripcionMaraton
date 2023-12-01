@@ -28,8 +28,8 @@ api.add_resource(EquipoIdResource, "/api/v3/equipos","/api/v3/equipos/<string:no
 api.add_resource(EquipoUsuarioResource, "/api/v3/equipos", "/api/v3/equipos/<int:id_equipo>/registrar/<int:id_usuario>")
 api.add_resource(MaratonResource, "/api/v2/maratones")
 #api.add_resource(MaratonIdResource, "/api/v2/maratones","/api/v2/maratones/<int:id>/<int:id>")
-api.add_resource(MaratonInscribirResource, "/api/v2/maratones","/api/v2/maratones/<int:equipo_id>/<int:maraton_id>")
-
+api.add_resource(MaratonInscribirResource, "/api/v2/maratones","/api/v2/maratones/<int:maraton_id>/inscribir/<int:equipo_id>")
+nombreEquipoo = "Por defecto"
 @app.route('/')
 def index():
 
@@ -71,33 +71,20 @@ def singup():
 def home():
     return render_template('auth/registroEquipo.html')
 
-@app.route('/menuNivel', methods=['GET', 'POST'])
-def menuNivel():
-    if request.method == 'POST':
-        try:
-            data = request.get_json()
-            nivel = data['nivel']
-            print(f'Nivel: {nivel}')
-            
-            return redirect(url_for('menuNivel'))
-        
-        
-        except KeyError as e:
-            print(f"Error: {e}")    
-    else:
-        return render_template('auth/menuNivel.html')
 
-from flask import request, render_template
+
 
 @app.route('/registroEquipo', methods=['GET', 'POST'])
 def registroEquipo():
     if request.method == 'POST':
         try:
+            global nombreEquipoo
             participante1 = request.form['participante1']
             participante2 = request.form['participante2']
             participante3 = request.form['participante3']
             nombreLider = request.form['Lider']
             nombreEquipo = request.form['nombreEquipo']
+            nombreEquipoo = nombreEquipo
             lider = clienteUsuarios.get_user_by_name(nombreLider)
             part1 = clienteUsuarios.get_user_by_name(participante1)
             print(part1)
@@ -107,14 +94,14 @@ def registroEquipo():
                 print("ENTRO")
                 category,message = lider.popitem()
                 flash(message,category)
-                clienteEquipos.create_equipo(nombreEquipo,lider['id'])
+                #clienteEquipos.create_equipo(nombreEquipo,lider['id'])
                 equipo = clienteEquipos.get_equipo_by_nombre(nombreEquipo)
                 print(equipo)
                 print(part1['id'])
                 print(equipo['id'])
-                mesasage = clienteEquipos.registrar_usuario(equipo['id'],part1['id'])
-                mesasage = clienteEquipos.registrar_usuario(equipo['id'],part2['id'])
-                mesasage = clienteEquipos.registrar_usuario(equipo['id'],part3['id'])
+                #mesasage = clienteEquipos.registrar_usuario(equipo['id'],part1['id'])
+                #mesasage = clienteEquipos.registrar_usuario(equipo['id'],part2['id'])
+                #mesasage = clienteEquipos.registrar_usuario(equipo['id'],part3['id'])
             else:
                 print("no entro")
                 print(lider)
@@ -122,14 +109,45 @@ def registroEquipo():
             print(f'Participante 1: {participante1}')
             print(f'Participante 2: {participante2}')
             print(f'Participante 3: {participante3}')
+            print(f'NOMBRE EQUIPO: {nombreEquipoo}')
             print(f'Nombre del equipo: {nombreEquipo}')
 
             
-            return redirect(url_for('menuNivel'))
+            return redirect(url_for("menuNivel"))
         except KeyError as e:
             print(f"Error: {e}")
     return render_template('auth/registroEquipo.html')
 
+@app.route("/menuNivel", methods=["GET", "POST"])
+def menuNivel():
+    global nombreEquipoo
+    if request.method == 'POST':
+        try:
+           
+            print(nombreEquipoo)
+            data = request.get_json()
+            equipo = clienteEquipos.get_equipo_by_nombre(nombreEquipoo)
+            nivel = data['nivel']
+            if nivel == "Intermedia":
+                print("entro")
+                maratonId = '2'
+            elif nivel == "Profesional":
+                maratonId = '4'
+            elif nivel == "Avanzada":
+                maratonId = '3'
+            else:
+                maratonId = '1'
+            print(f'Nivel: {nivel}')
+            print(equipo['id'])
+            print(maratonId)
+            hola = clienteMaraton.inscribir_equipo(equipo['id'],maratonId)
+            return redirect(url_for('menuNivel'))
+        
+        
+        except KeyError as e:
+            print(f"Error: {e}")    
+    else:
+        return render_template('auth/menuNivel.html')
 if __name__ == "__main__":
     app.run(debug=True)
     

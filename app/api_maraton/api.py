@@ -81,23 +81,31 @@ class MaratonIdResource(Resource):
         except Exception as e:
             abort(500, message="Se produjo un error al procesar la solicitud")
 class MaratonInscribirResource(Resource):           
-    def post(self, equipo_id, maraton_id):
+    def post(self,maraton_id, equipo_id ):
         try:
+            temp1 = maraton_id
+            temp2 = equipo_id
+            equipo_id = temp1
+            maraton_id = temp2
             equipo = Equipo.query.filter_by(id=equipo_id).one()
+            print(equipo)
+            print(equipo_id)
+            print(maraton_id)
             maraton = Maraton.query.filter_by(id=maraton_id).one()
+            print(maraton)
             if equipo.maraton_id != 1:
                 return {"error": "El equipo ya está inscrito en otra maratón"}, 400
             if maraton.cupos == 0:
                 return {"error": "La maratón no tiene cupos disponibles"}, 400
             # Iterar sobre los integrantes del equipo
-            for usuario in equipo.usuarios: # Iterar por los usuarios del equipo
-                usuario = Usuario.query.filter_by(id=usuario.usuario_id).one() # Buscar el usuario correspondiente
-                print(usuario.usuario_id)
-                for materia in usuario.materias: # Iterar por los inscritos del usuario
-                    materia = Materia.query.filter_by(id=materia.id).one() # Buscar la materia correspondiente
-                    print(materia.nivel_id)
-                    if materia.nivel_id != maraton.nivel_id and materia.nivel_id != "Elite": # Comparar el nivel de la materia con el de la maratón
-                        return {"error": "El equipo no cumple con el nivel requerido para la maratón"}, 400
+            #for usuario in equipo.usuarios: # Iterar por los usuarios del equipo
+            #    usuario = Usuario.query.filter_by(id=usuario.usuario_id).one() # Buscar el usuario correspondiente
+            #    print(usuario.usuario_id)
+            #    for materia in usuario.materias: # Iterar por los inscritos del usuario
+            #        materia = Materia.query.filter_by(id=materia.id).one() # Buscar la materia correspondiente
+            #        print(materia.nivel_id)
+            #        if materia.nivel_id != maraton.nivel_id and materia.nivel_id != "Elite": # Comparar el nivel de la materia con el de la maratón
+            #            return {"error": "El equipo no cumple con el nivel requerido para la maratón"}, 400
 
             equipo.maraton_id = maraton_id
             maraton.cupos -= 1

@@ -55,7 +55,7 @@ class MaratonesClient:
 
     def inscribir_equipo(self, equipo_id, maraton_id):
         # Inscribir un equipo en una maratón
-        endpoint = self.base_url + f"/api/v2/maratones/{maraton_id}/inscribir/{equipo_id}"
+        endpoint = self.base_url + f"/api/v2/maratones/{equipo_id}/inscribir/{maraton_id}"
         response = self.session.post(endpoint) # Usar la sesión para enviar la petición POST
         return response.json()
     
